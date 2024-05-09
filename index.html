@@ -5,83 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="google-site-verification" content="HYAxhsrnfzFAApcwnv-7VaWfB4ceaJIkHXJ_7tJfkOM" />
     <title>Text Converter</title>
+				<link rel="stylesheet" href="style.css">
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <style>
-        body {
-            background-color: #1a202c;
-            color: #cbd5e0;
-        }
-
-        .result-box {
-            border: 1px solid #4a5568;
-            border-radius: 0.5rem;
-            padding: 1rem;
-            margin-top: 1rem;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-        }
-
-        .hidden {
-            display: none;
-        }
-
-        /* Animation for copy button */
-        @keyframes pulse {
-            0% {
-                transform: scale(1);
-            }
-            50% {
-                transform: scale(1.1);
-            }
-            100% {
-                transform: scale(1);
-            }
-        }
-
-        .copy-animation {
-            animation-name: pulse;
-            animation-duration: 1s;
-        }
-
-        /* Animation for result copied message */
-        @keyframes fadeInOut {
-            0% {
-                opacity: 0;
-            }
-            25% {
-                opacity: 1;
-            }
-            75% {
-                opacity: 1;
-            }
-            100% {
-                opacity: 0;
-            }
-        }
-
-        .result-copied {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background-color: rgba(59, 130, 246, 0.9);
-            color: #ffffff;
-            padding: 10px 20px;
-            border-radius: 0.5rem;
-            animation-name: fadeInOut;
-            animation-duration: 3s;
-            z-index: 9999;
-        }
-
-        /* Credits */
-        .credits {
-            position: fixed;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 12px;
-            color: #a0aec0;
-        }
-    </style>
 </head>
 <body class="h-screen flex justify-center items-center">
     <div class="max-w-md p-8 bg-gray-800 rounded-md shadow-lg w-full">
@@ -115,7 +40,7 @@
     </div>
 
     <div id="resultCopied" class="hidden result-copied">Result Copied!</div>
-
+				<div id="errorText" class="hidden error-message">Please enter some text before converting!</div>
     <div class="credits">by Daniel Kyle Parreño</div>
 
     <script src="script.js"></script>
