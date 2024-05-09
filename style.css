@@ -66,7 +66,7 @@ body {
 
 .error-message {
     position: fixed;
-				top: calc(75% + 10px); /* Below the copy button */
+    top: calc(75% + 10px); /* Below the copy button */
     left: 50%;
     transform: translateX(-50%);
     background-color: #FF6666;
