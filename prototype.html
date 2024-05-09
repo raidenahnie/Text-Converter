@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text Converter</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #1a202c;
+            color: #cbd5e0;
+        }
+
+        .result-box {
+            border: 1px solid #4a5568;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            margin-top: 1rem;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        /* Animation for copy button */
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        .copy-animation {
+            animation-name: pulse;
+            animation-duration: 1s;
+        }
+
+        /* Animation for result copied message */
+        @keyframes fadeInOut {
+            0% {
+                opacity: 0;
+            }
+            25% {
+                opacity: 1;
+            }
+            75% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+            }
+        }
+
+        .result-copied {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(59, 130, 246, 0.9);
+            color: #ffffff;
+            padding: 10px 20px;
+            border-radius: 0.5rem;
+            animation-name: fadeInOut;
+            animation-duration: 3s;
+            z-index: 9999;
+        }
+
+        /* Credits */
+        .credits {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 12px;
+            color: #a0aec0;
+        }
+    </style>
+</head>
+<body class="h-screen flex justify-center items-center">
+    <div class="max-w-md p-8 bg-gray-800 rounded-md shadow-lg w-full">
+        <h1 class="text-2xl font-bold mb-4 text-center text-gray-200">Text Converter</h1>
+        <textarea id="inputText" class="w-full h-24 border border-gray-600 rounded-md p-2 mb-4 bg-gray-700 text-gray-200" placeholder="Enter your text here..."></textarea>
+        <div class="flex mb-4">
+            <div class="w-1/2">
+    <label for="inputType" class="block mb-2 text-gray-200">Convert from:</label>
+    <select id="inputType" class="w-full border border-gray-600 rounded-md p-2 bg-gray-700 text-gray-200">
+        <option value="text" selected>Text</option>
+        <option value="hex">HEX</option>
+        <option value="binary">Binary</option>
+        <option value="ascii">ASCII</option>
+        <option value="decimal">Decimal</option>
+    </select>
+</div>
+            <div class="w-1/2 ml-2">
+                <label for="outputType" class="block mb-2 text-gray-200">Convert to:</label>
+                <select id="outputType" class="w-full border border-gray-600 rounded-md p-2 bg-gray-700 text-gray-200">
+                    <option value="hex">HEX</option>
+                    <option value="binary">Binary</option>
+                    <option value="text">Text</option>
+                </select>
+            </div>
+        </div>
+        <button id="convertBtn" class="w-full bg-blue-500 text-white font-bold py-2 px-4 rounded-md mb-4">Convert</button>
+        <div id="result" class="hidden result-box bg-gray-700">
+            <textarea id="resultText" class="w-full h-24 border border-gray-600 rounded-md p-2 mb-4 bg-gray-800 text-gray-200" readonly></textarea>
+            <button id="copyBtn" class="w-full bg-blue-500 text-white font-bold py-2 px-4 rounded-md">Copy</button>
+        </div>
+    </div>
+
+    <div id="resultCopied" class="hidden result-copied">Result Copied!</div>
+
+    <div class="credits">by Daniel Kyle Parreño</div>
+
+    <script src="script.js"></script>
+    <script>
+        document.getElementById('copyBtn').addEventListener('click', function() {
+            let resultText = document.getElementById('resultText');
+            resultText.select();
+            document.execCommand('copy');
+            document.getElementById('copyBtn').classList.add('copy-animation');
+            document.getElementById('resultCopied').classList.remove('hidden');
+            setTimeout(function() {
+                document.getElementById('copyBtn').classList.remove('copy-animation');
+                document.getElementById('resultCopied').classList.add('hidden');
+            }, 3000);
+        });
+    </script>
+</body>
+</html>
