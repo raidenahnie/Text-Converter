@@ -10,46 +10,40 @@ document.getElementById('inputType').addEventListener('change', function() {
 
     // Adjust the dropdown options based on the selected input type
     switch (inputType) {
-        case 'hex':
-            for (let i = 0; i < outputTypeOptions.length; i++) {
-                let value = outputTypeOptions[i].value;
-                if (value !== 'text' && value !== 'decimal' && value !== 'binary') {
-                    outputTypeOptions[i].style.display = 'none';
-                }
-            }
-            break;
-        case 'binary':
-            for (let i = 0; i < outputTypeOptions.length; i++) {
-                let value = outputTypeOptions[i].value;
-                if (value !== 'text' && value !== 'hex' && value !== 'decimal' && value !== 'ascii') {
-                    outputTypeOptions[i].style.display = 'none';
-                }
-            }
-            break;
         case 'text':
-            for (let i = 0; i < outputTypeOptions.length; i++) {
-                let value = outputTypeOptions[i].value;
-                if (value !== 'hex' && value !== 'ascii' && value !== 'binary') {
-                    outputTypeOptions[i].style.display = 'none';
-                }
-            }
-            break;
+    document.getElementById('outputType').innerHTML = `
+        <option value="hex">HEX</option>
+        <option value="ascii">ASCII</option>
+        <option value="binary">Binary</option>
+    `;
+    break;
+case 'hex':
+ document.getElementById('outputType').innerHTML = `
+        <option value="text">Text</option>
+        <option value="binary">Binary</option>
+        <option value="decimal">Decimal</option>
+    `;
+    break;
+        case 'binary':
+    document.getElementById('outputType').innerHTML = `
+        <option value="text">Text</option>
+        <option value="hex">HEX</option>
+        <option value="ascii">ASCII</option>
+        <option value="decimal">Decimal</option>
+    `;
+    break;
         case 'ascii':
-            for (let i = 0; i < outputTypeOptions.length; i++) {
-                let value = outputTypeOptions[i].value;
-                if (value !== 'text' && value !== 'binary') {
-                    outputTypeOptions[i].style.display = 'none';
-                }
-            }
-            break;
-        case 'decimal':
-            for (let i = 0; i < outputTypeOptions.length; i++) {
-                let value = outputTypeOptions[i].value;
-                if (value !== 'hex' && value !== 'binary') {
-                    outputTypeOptions[i].style.display = 'none';
-                }
-            }
-            break;
+            document.getElementById('outputType').innerHTML = `
+        <option value="text">Text</option>
+        <option value="binary">Binary</option>
+    `;
+    break;
+        case 'decimal': document.getElementById('outputType').innerHTML = `
+        <option value="hex">HEX</option>
+        <option value="ascii">ASCII</option>
+        <option value="binary">Binary</option>
+    `;
+    break;
         default:
             break;
     }
@@ -78,6 +72,9 @@ document.getElementById('convertBtn').addEventListener('click', function() {
                 resultText = convertFromAscii(inputText, outputType);
                 break;
             case 'text':
+                resultText = convertFromText(inputText, outputType);
+                break;
+           case 'decimal':
                 resultText = convertFromText(inputText, outputType);
                 break;
             default:
@@ -111,6 +108,8 @@ function convertFromHex(text, outputType) {
             return result; // Return the converted ASCII text
         case 'text':
             return result; // Return the converted text
+        case 'decimal':
+            return convertToDecimal(result);
         default:
             return 'Invalid output type';
     }
@@ -145,31 +144,32 @@ function convertFromBinary(text, outputType) {
 }
 
 function convertFromAscii(text, outputType) {
-    // Split the text into individual ASCII characters
-    let asciiArray = text.split('');
+    // Split the text into individual ASCII values
+    let asciiArray = text.split(' ');
     
-    // Convert each ASCII character to its hexadecimal representation
+    // Convert each ASCII value to its corresponding character
     let result = '';
     for (let i = 0; i < asciiArray.length; i++) {
-        let decimal = asciiArray[i].charCodeAt(0);
-        switch(outputType) {
-            case 'hex':
-                result += decimal.toString(16).toUpperCase() + ' ';
-                break;
-            case 'binary':
-                result += decimal.toString(2) + ' ';
-                break;
-            case 'ascii':
-                result += asciiArray[i];
-                break;
-            case 'text':
-                result += asciiArray[i];
-                break;
-            default:
-                return 'Invalid output type';
+        let asciiValue = parseInt(asciiArray[i]);
+        if (isNaN(asciiValue) || asciiValue < 0 || asciiValue > 255) {
+            return 'Invalid ASCII value: ' + asciiArray[i];
         }
+        result += String.fromCharCode(asciiValue);
     }
-    return result.trim();
+    
+    // Return the result based on the output type
+    switch(outputType) {
+        case 'hex':
+            return convertToHex(result);
+        case 'binary':
+            return convertToBinary(result);
+        case 'ascii':
+            return text; // Return the original ASCII input
+        case 'text':
+            return result; // Return the converted text
+        default:
+            return 'Invalid output type';
+    }
 }
 
 function convertFromText(text, outputType) {
@@ -184,12 +184,11 @@ function convertFromText(text, outputType) {
         case 'text':
             return text; // Return the original text input
         case 'decimal':
-            return convertToDecimal(text);
+            return convertToDecimal(text); // Corrected line to convert text to decimal
         default:
             return 'Invalid output type';
     }
 }
-
 function convertToHex(text) {
     let hex = '';
     for (let i = 0; i < text.length; i++) {
@@ -216,16 +215,17 @@ function convertToBinary(text) {
 
 function convertToAscii(text) {
     let ascii = '';
-    for (let i = 0; i < text.length; i++) {
-        ascii += text.charCodeAt(i) + ' ';
+    let numbers = text.split(' ');
+    for (let i = 0; i < numbers.length; i++) {
+        ascii += String.fromCharCode(parseInt(numbers[i]));
     }
-    return ascii.trim();
+    return ascii;
 }
 
 function convertToDecimal(text) {
     let decimal = '';
     for (let i = 0; i < text.length; i++) {
-        decimal += text.charCodeAt(i) + ' ';
+        decimal += text.charCodeAt(i).toString(10) + ' ';
     }
     return decimal.trim();
-}
+         }
