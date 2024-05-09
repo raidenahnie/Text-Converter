@@ -11,39 +11,40 @@ document.getElementById('inputType').addEventListener('change', function() {
     // Adjust the dropdown options based on the selected input type
     switch (inputType) {
         case 'text':
-    document.getElementById('outputType').innerHTML = `
-        <option value="hex">HEX</option>
-        <option value="ascii">ASCII</option>
-        <option value="binary">Binary</option>
-    `;
-    break;
-case 'hex':
- document.getElementById('outputType').innerHTML = `
-        <option value="text">Text</option>
-        <option value="binary">Binary</option>
-        <option value="decimal">Decimal</option>
-    `;
-    break;
+            document.getElementById('outputType').innerHTML = `
+                <option value="hex">HEX</option>
+                <option value="ascii">ASCII</option>
+                <option value="binary">Binary</option>
+            `;
+            break;
+        case 'hex':
+            document.getElementById('outputType').innerHTML = `
+                <option value="text">Text</option>
+                <option value="binary">Binary</option>
+                <option value="decimal">Decimal</option>
+            `;
+            break;
         case 'binary':
-    document.getElementById('outputType').innerHTML = `
-        <option value="text">Text</option>
-        <option value="hex">HEX</option>
-        <option value="ascii">ASCII</option>
-        <option value="decimal">Decimal</option>
-    `;
-    break;
+            document.getElementById('outputType').innerHTML = `
+                <option value="text">Text</option>
+                <option value="hex">HEX</option>
+                <option value="ascii">ASCII</option>
+                <option value="decimal">Decimal</option>
+            `;
+            break;
         case 'ascii':
             document.getElementById('outputType').innerHTML = `
-        <option value="text">Text</option>
-        <option value="binary">Binary</option>
-    `;
-    break;
-        case 'decimal': document.getElementById('outputType').innerHTML = `
-        <option value="hex">HEX</option>
-        <option value="ascii">ASCII</option>
-        <option value="binary">Binary</option>
-    `;
-    break;
+                <option value="text">Text</option>
+                <option value="binary">Binary</option>
+            `;
+            break;
+        case 'decimal':
+            document.getElementById('outputType').innerHTML = `
+                <option value="hex">HEX</option>
+                <option value="ascii">ASCII</option>
+                <option value="binary">Binary</option>
+            `;
+            break;
         default:
             break;
     }
@@ -53,6 +54,15 @@ document.getElementById('convertBtn').addEventListener('click', function() {
     let inputText = document.getElementById('inputText').value;
     let inputType = document.getElementById('inputType').value;
     let outputType = document.getElementById('outputType').value;
+    
+    // Show error message if input text is empty
+    if (inputText.trim() === "") {
+        document.getElementById('errorText').classList.remove('hidden');
+        setTimeout(function() {
+            document.getElementById('errorText').classList.add('hidden');
+        }, 3000);
+        return;
+    }
     
     // Show loading animation
     document.getElementById('result').classList.remove('hidden');
@@ -74,7 +84,7 @@ document.getElementById('convertBtn').addEventListener('click', function() {
             case 'text':
                 resultText = convertFromText(inputText, outputType);
                 break;
-           case 'decimal':
+            case 'decimal':
                 resultText = convertFromText(inputText, outputType);
                 break;
             default:
@@ -228,4 +238,4 @@ function convertToDecimal(text) {
         decimal += text.charCodeAt(i).toString(10) + ' ';
     }
     return decimal.trim();
-         }
+    }
