@@ -1,0 +1,104 @@
+body {
+    background-color: #1a202c; /* Dark mode background color */
+    color: #cbd5e0; /* Dark mode text color */
+}
+
+.result-box {
+    border: 1px solid #4a5568;
+    border-radius: 0.5rem;
+    padding: 1rem;
+    margin-top: 1rem;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    background-color: #2d3748; /* Dark mode box background color */
+}
+
+.hidden {
+    display: none;
+}
+
+/* Animation for copy button */
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+.copy-animation {
+    animation-name: pulse;
+    animation-duration: 1s;
+}
+
+/* Animation for result copied message */
+@keyframes fadeInOut {
+    0% {
+        opacity: 0;
+    }
+    25% {
+        opacity: 1;
+    }
+    75% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
+.result-copied {
+    position: absolute;
+    top: calc(85% + 10px); /* Below the copy button */
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #48bb78; /* Green color */
+    color: #1a202c; /* Dark mode text color */
+    padding: 10px 20px;
+    border-radius: 0.5rem;
+    animation-name: fadeInOut;
+    animation-duration: 3s;
+    z-index: 9999;
+}
+
+.error-message {
+    position: fixed;
+				top: calc(75% + 10px); /* Below the copy button */
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #FF6666;
+    color: #ffffff;
+    padding: 10px 20px;
+    border-radius: 0.5rem;
+    animation-name: fadeInOut;
+    animation-duration: 3s;
+    z-index: 9999;
+}
+
+@keyframes fadeInOut {
+    0% {
+        opacity: 0;
+    }
+    25% {
+        opacity: 1;
+    }
+    75% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
+/* Credits */
+.credits {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 12px;
+    color: #a0aec0; /* Dark mode text color */
+}
